@@ -1,0 +1,70 @@
+---
+- name: Base Software Installation
+  hosts: all
+  sudo: yes
+  tasks:
+  - name: Add Open JDK Repository
+    apt_repository: repo='ppa:openjdk-r/ppa' validate_certs=False
+  - name: Add Repository For Pythons :)
+    apt_repository: repo='ppa:fkrull/deadsnakes' validate_certs=False
+  - name: Update Apt
+    apt: update_cache=yes
+  - name: Install Base Packages
+    apt: name={{item}} state=installed
+    with_items:
+      - python3
+      - python3-pip
+      - openjdk-8-jdk
+      - git
+      - nginx
+      - python-virtualenv
+      - ansible
+      - unzip
+      - python-tox
+      - python3.2
+      - python3.3
+      - python3.4
+      - python3.5
+  - name: Increase File Descriptors
+    tags: settings
+    lineinfile: dest=/etc/security/limits.conf line="* soft nofile 60000"
+  - name: Increase File Descriptors
+    tags: settings
+    lineinfile: dest=/etc/security/limits.conf line="* hard nofile 60000"
+  - name: Download Code
+    git: repo={{git_repo}} dest={{code_dir}} force=yes
+  - name: Update perms
+    file: path={{code_dir}} mode=777 state=directory recurse=yes
+- name: Deploy ZK
+  hosts: all
+  tags: zk
+  sudo: yes
+  tasks:
+  - name: Deploying Zookeeper 1
+    include: ../roles/zookeeper/tasks/deploy.yml state="present" zoo_app_base=/opt/zk1 z_id=1
+  - name: Deploying Zookeeper 2
+    include: ../roles/zookeeper/tasks/deploy.yml state="present" zoo_app_base=/opt/zk2 z_id=2
+  - name: Deploying Zookeeper 3
+    include: ../roles/zookeeper/tasks/deploy.yml state="present" zoo_app_base=/opt/zk3 z_id=3
+- name: Deploy Solr
+  hosts: all
+  tags: solr
+  sudo: yes
+  tasks:
+  - name: Deploying Solr
+    include: ../roles/solr/tasks/deploy.yml state="present" app_base=/opt/solrs version={{item}} port=9{{ item | regex_replace('\.', '') }} zoo=localhost:8001 mirror=/vagrant/
+    with_items:
+      - 5.2.1
+      - 5.3.1
+      - 5.4.1
+      - 5.5.1
+      - 6.0.0
+- name: Run Unit Tests
+  hosts: all
+  tags: solr
+  sudo: yes
+  tasks:
+  - name: Update perms
+    shell: tox
+    args:
+      chdir: {{code_dir}}

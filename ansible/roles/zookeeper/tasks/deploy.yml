@@ -1,0 +1,21 @@
+---
+- name: Crate App Dir
+  file: path="{{zoo_app_base}}/" state=directory
+- name: Crate Data Dir
+  file: path="{{zoo_app_base}}/data" state=directory
+- name: Deploy App
+  unarchive: copy=yes src=../roles/zookeeper/files/zookeeper-3.4.8.tar.gz dest={{zoo_app_base}} mode=0700
+- name: Deploy Config
+  template: src=../roles/zookeeper/templates/zoo.cfg dest={{zoo_app_base}}/zookeeper-3.4.8/conf/zoo.cfg
+- name: Create IDs
+  shell: 'echo {{z_id}} > {{zoo_app_base}}/data/myid'
+- name: Change Perm
+  file: 'path="{{zoo_app_base}}/zookeeper-3.4.8/bin/zkServer.sh" mode="0750"'
+  file: 'path="{{zoo_app_base}}/zookeeper-3.4.8/bin/zkCli.sh" mode="0750"'
+- name: Start
+  shell: "nohup bin/zkServer.sh start &"
+  args:
+    chdir: "{{zoo_app_base}}/zookeeper-3.4.8/"
+- wait_for: port=800{{z_id}} state=present delay=2
+- name: Startup Service jerry-rig
+  lineinfile: dest="/etc/init.d/rc.local" line='{{zoo_app_base}}/zookeeper-3.4.8/bin/zkServer.sh start'
