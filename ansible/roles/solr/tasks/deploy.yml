@@ -37,6 +37,8 @@
 
 - name: Upload source_coll schema
   shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname source_coll -confdir {{code_dir}}/test/resources/{{version}}/"
+
+- name: Reload Collection
   shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=source_coll_shard1_replica1'
 
 - name: Create dest_coll Collection
@@ -44,6 +46,8 @@
 
 - name: Upload dest_coll schema
   shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname dest_coll -confdir {{code_dir}}/test/resources/{{version}}/"
+
+- name: Reload Collection
   shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=dest_coll_shard1_replica1'
 
 - name: Startup Service jerry-rig

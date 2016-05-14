@@ -9,8 +9,9 @@
   template: src=../roles/zookeeper/templates/zoo.cfg dest={{zoo_app_base}}/zookeeper-3.4.8/conf/zoo.cfg
 - name: Create IDs
   shell: 'echo {{z_id}} > {{zoo_app_base}}/data/myid'
-- name: Change Perm
+- name: Change Perm ZKServer
   file: 'path="{{zoo_app_base}}/zookeeper-3.4.8/bin/zkServer.sh" mode="0750"'
+- name: Change Perm ZKServer
   file: 'path="{{zoo_app_base}}/zookeeper-3.4.8/bin/zkCli.sh" mode="0750"'
 - name: Start
   shell: "nohup bin/zkServer.sh start &"

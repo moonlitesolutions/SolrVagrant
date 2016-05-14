@@ -61,10 +61,10 @@
       - 6.0.0
 - name: Run Unit Tests
   hosts: all
-  tags: solr
+  tags: test
   sudo: yes
   tasks:
-  - name: Update perms
-    shell: tox
+  - name: Run Tests
+    shell: tox > log.log
     args:
-      chdir: {{code_dir}}
+      chdir: "{{code_dir}}"
