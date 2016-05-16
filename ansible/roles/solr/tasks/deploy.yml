@@ -24,10 +24,10 @@
   wait_for: port={{ port }} state=present delay=5 timeout=30
 
 - name: Upload basic config
-  shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname basic_configs -confdir {{app_base}}/{{version}}/solr-{{version}}/server/solr/configsets/basic_configs"
+  shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname basic_configs -confdir {{app_base}}/{{version}}/solr-{{version}}/server/solr/configsets/basic_configs/conf/"
 
 - name: Upload data_driven_schema_configs
-  shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname data_driven_schema_configs -confdir {{app_base}}/{{version}}/solr-{{version}}/server/solr/configsets/data_driven_schema_configs"
+  shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname data_driven_schema_configs -confdir {{app_base}}/{{version}}/solr-{{version}}/server/solr/configsets/data_driven_schema_configs/conf"
 
 - name: Create SolrClient_unittest Collection
   shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c SolrClient_unittest -p {{ port }}"
