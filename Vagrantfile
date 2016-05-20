@@ -6,6 +6,9 @@ Vagrant.configure(2) do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
+  #To use on vagrant 1.8.1 install this pathc
+  #https://github.com/mitchellh/vagrant/commit/c2c1a443fdd6bb174183c7ee97d01e39db9a8581#diff-c379a6054318dfc48824835501d40778
+
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"

@@ -59,12 +59,10 @@
       - 5.4.1
       - 5.5.1
       - 6.0.0
-- name: Run Unit Tests
+- name: Update Perms
   hosts: all
   tags: test
   sudo: yes
   tasks:
   - name: Run Tests
-    shell: tox > log.log
-    args:
-      chdir: "{{code_dir}}"
+    file: recurse=yes path=/home/vagrant/code state=directory mode=0777
