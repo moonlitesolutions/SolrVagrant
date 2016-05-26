@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
     ansible.install = true
     ansible.verbose = false
     ansible.raw_arguments  = [
-      '--extra-vars "git_repo=https://github.com/nickvasilyev/SolrClient.git mirror=/vagrant/ code_dir=/home/vagrant/code"'
+      '--extra-vars "git_repo=https://github.com/nickvasilyev/SolrClient.git mirror=/vagrant/ code_dir=/vagrant/"'
       #'--extra-vars "git_repo=https://github.com/nickvasilyev/SolrClient.git mirror=http://archive.apache.org/dist/lucene code_dir=/home/vagrant/code"'
     ]
   end
