@@ -35,13 +35,7 @@
   - name: Install Python Reqs
     pip: requirements={{code_dir}}/requirements.txt executable=pip3
   - name: Update perms
-    file: path={{code_dir}} mode=777 state=directory recurse=yes
-# This is added because tox has problems running in /vagrant directory. So
-# So create a symbolic link to /home/vagrant/code
-# You can edit the code it pulls down from the SolrVagrant directory
-# But running the tests requires you to be in /home/vagrant/code in the vagrant box
-  - name: Create Link
-    file: src={{code_dir}} dest=/home/vagrant/code/
+    file: path={{code_dir}} mode=755 state=directory recurse=yes
 - name: Deploy ZK
   hosts: all
   tags: zk

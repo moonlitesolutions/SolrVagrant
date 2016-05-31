@@ -30,10 +30,10 @@
   shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname data_driven_schema_configs -confdir {{app_base}}/{{version}}/solr-{{version}}/server/solr/configsets/data_driven_schema_configs/conf"
 
 - name: Create SolrClient_unittest Collection
-  shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c SolrClient_unittest -p {{ port }}"
+  shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c SolrClient_unittest -p {{ port }} -replicationFactor 2"
 
 - name: Create source_coll Collection
-  shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c source_coll -d basic_configs -p {{ port }}"
+  shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c source_coll -d basic_configs -p {{ port }} -replicationFactor 2"
 
 - name: Upload source_coll schema
   shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname source_coll -confdir {{code_dir}}/test/resources/{{version}}/"
@@ -42,7 +42,7 @@
   shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=source_coll_shard1_replica1'
 
 - name: Create dest_coll Collection
-  shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c dest_coll -d basic_configs -p {{ port }}"
+  shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c dest_coll -d basic_configs -p {{ port }} -replicationFactor 2"
 
 - name: Upload dest_coll schema
   shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}}/solr-{{version}} -cmd upconfig -confname dest_coll -confdir {{code_dir}}/test/resources/{{version}}/"
