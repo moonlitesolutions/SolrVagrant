@@ -30,15 +30,9 @@ If you think you will need to vagrant up from scratch more than once, I recommen
 To do this:
 
 1. In the extra vars passed to ansible. change the mirror from mirror=http://archive.apache.org/dist/lucene to /vagrant/
-2. Create a `solr` directory on the root and put all the versions in there for example:
-
-
-
-    -SolrVagrant
-     --solr
-      --5.2.1
-        --solr-5.2.1.tgz
-      --5.3.1
-        --solr-5.3.1.tgz
+2. Create a `solr` directory on the root of SolrVagrant and put all the versions in there for example:
+   - SolrVagrant/solr/5.2.1/solr-5.2.1.tgz
+   - SolrVagrant/solr/5.3.1/solr-5.3.1.tgz
+   - etc...
 
  This will use the downloaded pacakges instead of pulling them from apache mirrors.
