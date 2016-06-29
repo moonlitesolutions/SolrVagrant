@@ -33,6 +33,7 @@ To do this:
 2. Create a `solr` directory on the root and put all the versions in there for example:
 
 
+
     -SolrVagrant
      --solr
       --5.2.1
