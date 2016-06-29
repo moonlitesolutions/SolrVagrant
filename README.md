@@ -1,9 +1,10 @@
 # SolrVagrant
+
 Vagrant Config for Solr Testing
 
-I made this to make it easier to test SolrClient python library with multiple versions of Solr. However, I think this can have other uses, so I am putting it up on github.
+I made this to make it easier to test SolrClient python library with multiple versions of Solr. However, I think this can have other uses, so I am putting it up on github as it's own repo.
 
-This vagrant + ansible rig will set up zookeepers, and versions of solr listed in ansible/plays/playbook.yml (at the end).
+This vagrant + ansible rig will set up zookeepers, and several versions of solr listed in ansible/plays/playbook.yml (at the end).
 
 Zookeepers go into /opt/zk1, zk2, zk3.
 
@@ -13,7 +14,8 @@ The port for solr is 9 and the version number. So 5.2.1 will listen on 9521, 5.3
 
 To use it:
 1. Clone this repo
-2. Edit the `Vagrantfile`, find this line and replace it with your branch. This can be anything, but the playbook will automatically run tox inside.
+2. Edit the `Vagrantfile`, find this line and replace it with your branch.
+
 		ansible.raw_arguments  = [
       	'--extra-vars "git_repo=https://github.com/nickvasilyev/SolrClient.git"'
     	]
@@ -25,13 +27,17 @@ To use it:
 
 Note:
 If you think you will need to vagrant up from scratch more than once, I recommend you download all solr tgz packages locally.
-To do this, change the mirror parameter to `/vagrant/`. Create a `solr` directory on the root and put all the versions in there
-for example:
-   -SolrVagrant
-   --solr
-     --5.2.1
-       --solr-5.2.1.tgz
-     --5.3.1
-       --solr-5.2.1.tgz
+To do this:
+
+1. In the extra vars passed to ansible. change the mirror from mirror=http://archive.apache.org/dist/lucene to /vagrant/
+2. Create a `solr` directory on the root and put all the versions in there for example:
+
+
+    -SolrVagrant
+     --solr
+      --5.2.1
+        --solr-5.2.1.tgz
+      --5.3.1
+        --solr-5.3.1.tgz
 
  This will use the downloaded pacakges instead of pulling them from apache mirrors.
