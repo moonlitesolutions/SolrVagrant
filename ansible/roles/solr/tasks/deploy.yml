@@ -41,6 +41,9 @@
 - name: Reload Collection
   shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=source_coll_shard1_replica1'
 
+- name: Reload Collection
+  shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=source_coll_shard2_replica1'
+
 - name: Create dest_coll Collection
   shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr create_collection -c dest_coll -d basic_configs -p {{ port }} -shards 2"
 
@@ -49,6 +52,8 @@
 
 - name: Reload Collection
   shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=dest_coll_shard1_replica1'
+- name: Reload Collection
+  shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=dest_coll_shard2_replica1'
 
 - name: Startup Service jerry-rig
   lineinfile: dest="/etc/init.d/rc.local" line='{{app_base}}/{{version}}/solr-{{version}}/bin/solr start'
