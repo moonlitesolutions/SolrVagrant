@@ -1,1 +1,1 @@
-cd /vagrant && PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true ansible-playbook --limit='default' --inventory-file=/tmp/vagrant-ansible/inventory -v --extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient.git" ansible/plays/playbook.yml
+cd /vagrant && PYTHONUNBUFFERED=1 ANSIBLE_NOCOLOR=true ansible-playbook --limit='default' --inventory-file=/tmp/vagrant-ansible/inventory -v --extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient.git  mirror=/vagrant/ code_dir=/vagrant/code" ansible/plays/playbook.yml

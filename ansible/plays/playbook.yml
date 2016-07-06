@@ -56,10 +56,8 @@
     include: ../roles/solr/tasks/deploy.yml state="present" app_base=/opt/solrs version={{item}} port=9{{ item | regex_replace('\.', '') }} zoo=localhost:8001 mirror=/vagrant/
     with_items:
       - 5.2.1
-      - 5.3.1
-      - 5.4.1
-      - 5.5.1
-      - 6.0.0
+      - 5.5.2
+      - 6.1.0
 - name: Update Perms
   hosts: all
   tags: test

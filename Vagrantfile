@@ -20,18 +20,16 @@ Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
 
   config.vm.network "forwarded_port", guest: 9521, host: 9521
-  config.vm.network "forwarded_port", guest: 9531, host: 9531
-  config.vm.network "forwarded_port", guest: 9541, host: 9541
-  config.vm.network "forwarded_port", guest: 9551, host: 9551
-  config.vm.network "forwarded_port", guest: 9600, host: 9600
+  config.vm.network "forwarded_port", guest: 9552, host: 9552
+  config.vm.network "forwarded_port", guest: 9610, host: 9610
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "ansible/plays/playbook.yml"
     ansible.install = true
     ansible.verbose = false
     ansible.raw_arguments  = [
-      #'--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient.git mirror=/vagrant/ code_dir=/vagrant/code"'
-      '--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
+      '--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient.git mirror=/vagrant/ code_dir=/vagrant/code"'
+      #'--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
     ]
   end
 end
