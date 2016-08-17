@@ -28,8 +28,8 @@ Vagrant.configure(2) do |config|
     ansible.install = true
     ansible.verbose = false
     ansible.raw_arguments  = [
-      '--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient.git mirror=/vagrant/ code_dir=/vagrant/code"'
-      #'--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
+      #'--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient.git mirror=/vagrant/ code_dir=/vagrant/code"'
+      '--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
     ]
   end
 end
