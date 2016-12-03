@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
   config.vm.provider :virtualbox do |v|
-    v.customize ["modifyvm", :id, "--memory", 8000]
+    v.customize ["modifyvm", :id, "--memory", 6000]
   end
 
   config.vm.box_check_update = true
@@ -21,16 +21,16 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "forwarded_port", guest: 9521, host: 9521
   config.vm.network "forwarded_port", guest: 9553, host: 9553
-  config.vm.network "forwarded_port", guest: 9610, host: 9610
   config.vm.network "forwarded_port", guest: 9621, host: 9621
+  config.vm.network "forwarded_port", guest: 9630, host: 9630
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "ansible/plays/playbook.yml"
     ansible.install = true
     ansible.verbose = false
     ansible.raw_arguments  = [
-      '--extra-vars "git_repo=https://github.com/nickvasilyev/SolrClient.git mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
-      #'--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
+      '--extra-vars "git_repo=https://github.com/moonlitesolutions/SolrClient mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
+      #'--extra-vars "git_repo=https://github.com/nickvasilyev/SolrClient.git mirror=http://archive.apache.org/dist/lucene code_dir=/vagrant/code"'
     ]
   end
 end

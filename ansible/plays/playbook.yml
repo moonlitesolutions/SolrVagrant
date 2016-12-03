@@ -57,8 +57,8 @@
     with_items:
       - 5.2.1
       - 5.5.3
-      - 6.1.0
       - 6.2.1
+      - 6.3.0
 - name: Update Perms
   hosts: all
   tags: test
