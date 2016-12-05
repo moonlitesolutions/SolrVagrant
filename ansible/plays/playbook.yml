@@ -35,11 +35,18 @@
   - name: Install Python Reqs
     pip: requirements={{code_dir}}/requirements.txt executable=pip3
   - name: Update perms
-    file: path={{code_dir}} mode=755 state=directory recurse=yes
+    file: path={{code_dir}} mode=755 state=directory recurse=yes owner=vagrant
+  - name: Create App Dir
+    file: state=directory path=/opt/solrs mode=0777 owner=vagrant
+  - name: Change Opt Permissions
+    file: state=directory path=/opt/ mode=0777 owner=vagrant
+  - name: Create Startup File
+    file: state=touch path=/opt/start_all.sh mode=0777 owner=vagrant
+  - name: Startup Service jerry-rig
+    lineinfile: dest="/etc/init.d/rc.local" line='/opt/start_all.sh'
 - name: Deploy ZK
   hosts: all
   tags: zk
-  sudo: yes
   tasks:
   - name: Deploying Zookeeper 1
     include: ../roles/zookeeper/tasks/deploy.yml state="present" zoo_app_base=/opt/zk1 z_id=1
@@ -50,7 +57,6 @@
 - name: Deploy Solr
   hosts: all
   tags: solr
-  sudo: yes
   tasks:
   - name: Deploying Solr
     include: ../roles/solr/tasks/deploy.yml state="present" app_base=/opt/solrs version={{item}} port=9{{ item | regex_replace('\.', '') }} zoo=localhost:8001 mirror=/vagrant/
@@ -62,7 +68,8 @@
 - name: Update Perms
   hosts: all
   tags: test
-  sudo: yes
   tasks:
-  - name: Run Tests
+  - name: Update perms
     file: recurse=yes path=/home/vagrant/code state=directory mode=0777
+  - name: Run Tests
+    shell: /vagrant/code/run_tests.py >> /vagrant/code/TEST_RESULTS.log

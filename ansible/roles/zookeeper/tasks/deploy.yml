@@ -1,8 +1,8 @@
 ---
 - name: Crate App Dir
-  file: path="{{zoo_app_base}}/" state=directory
+  file: path="{{zoo_app_base}}/" state=directory owner=vagrant
 - name: Crate Data Dir
-  file: path="{{zoo_app_base}}/data" state=directory
+  file: path="{{zoo_app_base}}/data" state=directory owner=vagrant
 - name: Deploy App
   unarchive: copy=yes src=../roles/zookeeper/files/zookeeper-3.4.8.tar.gz dest={{zoo_app_base}} mode=0700
 - name: Deploy Config
@@ -19,4 +19,4 @@
     chdir: "{{zoo_app_base}}/zookeeper-3.4.8/"
 - wait_for: port=800{{z_id}} state=present delay=2
 - name: Startup Service jerry-rig
-  lineinfile: dest="/etc/init.d/rc.local" line='{{zoo_app_base}}/zookeeper-3.4.8/bin/zkServer.sh start'
+  lineinfile: dest="/opt/start_all.sh" line='{{zoo_app_base}}/zookeeper-3.4.8/bin/zkServer.sh start'

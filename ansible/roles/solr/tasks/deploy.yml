@@ -11,11 +11,11 @@
 - name: Create ZK Chroot
   shell: "{{app_base}}/{{version}}/solr-{{version}}/server/scripts/cloud-scripts/zkcli.sh -zkhost {{zoo}} -cmd makepath /solr-{{version}}"
 
-- name: Add Solr Service Solr
-  template: src=../roles/solr/templates/solr dest=/etc/init.d/solr-{{version}} mode=755
+#- name: Add Solr Service Solr
+#  template: src=../roles/solr/templates/solr dest=/etc/init.d/solr-{{version}} mode=755
 
-- name: Enable Service
-  service: name="solr-{{version}}" enabled=yes
+#- name: Enable Service
+#  service: name="solr-{{version}}" enabled=yes
 
 - name: Starting Solr
   shell: "{{app_base}}/{{version}}/solr-{{version}}/bin/solr start"
@@ -56,4 +56,4 @@
   shell: curl -XGET 'http://localhost:{{ port }}/solr/admin/cores?action=RELOAD&core=dest_coll_shard2_replica1'
 
 - name: Startup Service jerry-rig
-  lineinfile: dest="/etc/init.d/rc.local" line='{{app_base}}/{{version}}/solr-{{version}}/bin/solr start'
+  lineinfile: dest="/opt/start_all.sh" line='{{app_base}}/{{version}}/solr-{{version}}/bin/solr start'
