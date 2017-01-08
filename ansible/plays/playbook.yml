@@ -13,6 +13,7 @@
     apt: name={{item}} state=installed
     with_items:
       - python3
+      - python-dev
       - python3-pip
       - openjdk-8-jdk
       - git
