@@ -24,6 +24,14 @@ To use it:
 4. The code from the git repo will be in ~/code/
 5. Do what you want with the solrs.
 
+To run a single test run something like:
+
+./run_tests.py -py 3.5 -solr 6.3.0 -test test_client.ClientTestIndexing.test_down_solr_exception
+
+or
+
+./run_tests.py -py 3.5 -solr 6.3.0 -test test_client
+
 
 Note:
 If you think you will need to vagrant up from scratch more than once, I recommend you download all solr tgz packages locally.
