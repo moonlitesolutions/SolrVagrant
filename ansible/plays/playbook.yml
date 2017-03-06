@@ -13,6 +13,8 @@
     apt: name={{item}} state=installed
     with_items:
       - python3
+      - python3-dev
+      - python-dev
       - python3-pip
       - openjdk-8-jdk
       - git
@@ -31,7 +33,7 @@
     tags: settings
     lineinfile: dest=/etc/security/limits.conf line="* hard nofile 60000"
   - name: Download Code
-    git: repo={{git_repo}} dest={{code_dir}} force=yes
+    git: repo={{git_repo}} dest={{code_dir}} force=yes version=dev
   - name: Install Python Reqs
     pip: requirements={{code_dir}}/requirements.txt executable=pip3
   - name: Update perms
@@ -72,4 +74,4 @@
   - name: Update perms
     file: recurse=yes path=/home/vagrant/code state=directory mode=0777
   - name: Run Tests
-    shell: /vagrant/code/run_tests.py >> /vagrant/code/TEST_RESULTS.log
+    shell: cd /vagrant/code/ && ./run_tests.py >> /vagrant/code/TEST_RESULTS.log
